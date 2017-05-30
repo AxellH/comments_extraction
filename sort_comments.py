@@ -4,8 +4,8 @@ import shlex
 import time
 
 # Algorithm parameters
-MIN_SIZE_WORD = 3
-TRESHOLD_FREQUENCY = 100
+MIN_SIZE_WORD = 3 # Size minimal of the comments to process
+TRESHOLD_FREQUENCY = 100 # Minimum appearance frequency of the comments to process
 
 csv_data = 'test_1000_lcp.csv'
 output_dictionnary = 'dico_FR0088_100hz.txt'
