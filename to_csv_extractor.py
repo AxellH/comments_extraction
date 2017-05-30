@@ -9,8 +9,10 @@ ids_version = [] # Final array for version ID
 mdl = [] # If a line contains 'modelComment' it is put into this array
 mdl_comment = [] # Final array for model comment
 
-csv_data = './test_1000_lcp.csv'
-json_data = 'test_1000_lcp.json'
+
+json_data = 'test_1000_apc.json'
+csv_data = './test_1000_apc.csv'
+
 lines = '' # File lines concatenation
 
 NUM_ATTRIBUTES = 7 # [mdl ID, mdl comment, var name, var comment, piece name, piece comment, mdl com + var com + piece com]

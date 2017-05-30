@@ -5,10 +5,10 @@ import time
 
 # Algorithm parameters
 MIN_SIZE_WORD = 3 # Size minimal of the comments to process
-TRESHOLD_FREQUENCY = 100 # Minimum appearance frequency of the comments to process
+TRESHOLD_FREQUENCY = 50 # Minimum appearance frequency of the comments to process
 
-csv_data = 'test_1000_lcp.csv'
-output_dictionnary = 'dico_FR0088_100hz.txt'
+csv_data = 'test_1000_apc.csv'
+output_dictionnary = 'dico_FR6798_50hz.txt'
 
 # Check if a character 's' is a number
 # Return a boolean
