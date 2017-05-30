@@ -7,6 +7,9 @@ import time
 MIN_SIZE_WORD = 3
 TRESHOLD_FREQUENCY = 100
 
+csv_data = 'test_1000_lcp.csv'
+output_dictionnary = 'dico_FR0088_100hz.txt'
+
 # Check if a character 's' is a number
 # Return a boolean
 def is_number(s):
@@ -22,7 +25,7 @@ time_measure = time.time()
 # First part : sort the comments by only keeping the ones of size > MIN_SIZE_WORD
 comment_array = [] # First array : it contains all the comments of more than MIN_SIZE_WORD characters
 lines = '' # Used to concatenate csv lines
-with open('test_1000_lcp.csv', 'r') as csv:
+with open(csv_data, 'r') as csv:
 	for line in csv:
 		lines = lines + line
 		line_split_1 = re.split(';', line)
@@ -48,7 +51,7 @@ for word in without_num_array:
 		final_array.append(word)
 
 # Final step : write the comments which are left into a txt file
-file = open('dico_FR0088_100hz.txt', 'w')
+file = open(output_dictionnary, 'w')
 final_array.sort()
 for word in final_array:
 	if without_num_array.count(word) >= TRESHOLD_FREQUENCY:

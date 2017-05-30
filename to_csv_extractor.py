@@ -1,6 +1,7 @@
 import json
 import re
 import csv
+import time
 
 ids = [] # If a line contains 'id' it is put into this array
 ids_mdl = [] # Final array for mdl ID
@@ -8,6 +9,8 @@ ids_version = [] # Final array for version ID
 mdl = [] # If a line contains 'modelComment' it is put into this array
 mdl_comment = [] # Final array for model comment
 
+csv_data = './test_1000_lcp.csv'
+json_data = 'test_1000_lcp.json'
 lines = '' # File lines concatenation
 
 NUM_ATTRIBUTES = 7 # [mdl ID, mdl comment, var name, var comment, piece name, piece comment, mdl com + var com + piece com]
@@ -38,8 +41,11 @@ def replace_it(matrix, counter, idx):
 	Matrix[counter][idx] = Matrix[counter][idx].replace('   ', ' ')
 	return Matrix[counter][idx].upper()
 
+# Measure execution time
+time_measure = time.time()
+
 # Id and model comments extraction
-data_file = open('test_1000_lcp.json') # Open the json file
+data_file = open(json_data) # Open the json file
 for line in data_file: # Travel across it
 	lines = lines + line # Lines concatenations
 	if '_id' in line: # Identification of the 'id' piece of information
@@ -51,7 +57,6 @@ for line in data_file: # Travel across it
 for i in range(len(mdl)): # Travel across the mdl commentaries extracted
 	mdl_split = re.split('"', mdl[i]) # Extract each part between quotes of the modelComment line
 	mdl_comment.append(mdl_split[3]) # The fourth part is the modelComment needed
-	mdl_comment[i] = mdl_comment[i].replace('\\n', ' ') # Make it proper
 
 # Models ID extraction
 id_nb = 0 # Used to detect the number of id in a model Json
@@ -128,7 +133,7 @@ fields = ['Model ID', 'Model Comment', 'Variant Name', 'Variant Comment', 'Piece
 count = 0
 
 # Write the final 2D array obtained into a CSV file
-with open('./test_1000_lcp.csv', 'w', newline='') as csv_file:
+with open(csv_data, 'w', newline='') as csv_file:
 	writer = csv.writer(csv_file, delimiter = ';')
 	writer.writerows([fields])
 	for i in range(len(Matrix)):
@@ -143,3 +148,7 @@ with open('./test_1000_lcp.csv', 'w', newline='') as csv_file:
 		if (count == count_cmp): # We only write the line if it hasn't got any empty field
 			writer.writerows([Matrix[i]])
 	csv_file.close() # Properly close the final csv file
+
+# Final execution time measurement
+time_bis = time.time() - time_measure
+print('Exec. time = %f sec' % time_bis)
