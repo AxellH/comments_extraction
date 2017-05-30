@@ -1,1 +1,1 @@
-"# comments_extraction" 
+This project is dealing with data extraction from JSON data files to CSV files in order to clearly identify and visualize these data. It is tried to extract some of them in order to identify some redundances.
