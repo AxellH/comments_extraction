@@ -2,13 +2,14 @@
 import re
 import shlex
 import time
+import csv
 
 # Algorithm parameters
 MIN_SIZE_WORD = 3 # Size minimal of the comments to process
 TRESHOLD_FREQUENCY = 50 # Minimum appearance frequency of the comments to process
 
-csv_data = 'test_1000_apc.csv'
-output_dictionnary = 'dico_FR6798_50hz.txt'
+csv_data = 'test_4700_lcp_json.csv'
+output_dictionnary = './dictionnary_4700_lcp.csv'
 
 # Check if a character 's' is a number
 # Return a boolean
@@ -20,7 +21,7 @@ def is_number(s):
 	    return False
 
 # Measure execution time
-time_measure = time.time()
+start = time.time()
 
 # First part : sort the comments by only keeping the ones of size > MIN_SIZE_WORD
 comment_array = [] # First array : it contains all the comments of more than MIN_SIZE_WORD characters
@@ -50,16 +51,20 @@ for word in without_num_array:
 	if (word in final_array) == False:
 		final_array.append(word)
 
+time_bis = time.time() - start
+print('Exec. time before writing = %f sec' % time_bis)
+
 # Final step : write the comments which are left into a txt file
-file = open(output_dictionnary, 'w')
 final_array.sort()
-for word in final_array:
-	if without_num_array.count(word) >= TRESHOLD_FREQUENCY:
-		file.write(word)
-		file.write(' : ')
-		file.write(str(without_num_array.count(word)))
-		file.write('\n')
+fields = ['Comment', 'Occurences']
+with open(output_dictionnary, 'w', newline='') as file:
+	for word in final_array:
+		if without_num_array.count(word) >= TRESHOLD_FREQUENCY:
+			file.write(word)
+			file.write(';')
+			file.write(str(without_num_array.count(word)))
+			file.write(';\n')
 
 # Final execution time measurement
-time_bis = time.time() - time_measure
+time_bis = time.time() - start
 print('Exec. time = %f sec' % time_bis)
