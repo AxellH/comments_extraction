@@ -10,8 +10,8 @@ mdl = [] # If a line contains 'modelComment' it is put into this array
 mdl_comment = [] # Final array for model comment
 
 
-json_data = 'test_1000_apc.json'
-csv_data = './test_1000_apc.csv'
+json_data = 'test_10000_lcp.json'
+csv_data = './test_version_filtered_lcp.csv'
 
 lines = '' # File lines concatenation
 
@@ -37,6 +37,7 @@ def replace_it(matrix, counter, idx):
 	Matrix[counter][idx] = Matrix[counter][idx].replace('/', ' ')
 	Matrix[counter][idx] = Matrix[counter][idx].replace('\\', ' ')
 	Matrix[counter][idx] = Matrix[counter][idx].replace('Ã©', 'é')
+	Matrix[counter][idx] = Matrix[counter][idx].replace('Ã‰', 'é')
 	Matrix[counter][idx] = Matrix[counter][idx].replace('=', ' ')
 	Matrix[counter][idx] = Matrix[counter][idx].replace('+', ' ')
 	Matrix[counter][idx] = Matrix[counter][idx].replace('  ', ' ')
@@ -50,7 +51,7 @@ time_measure = time.time()
 data_file = open(json_data) # Open the json file
 for line in data_file: # Travel across it
 	lines = lines + line # Lines concatenations
-	if '_id' in line: # Identification of the 'id' piece of information
+	if 'ObjectId' in line: # Identification of the 'id' piece of information
 		ids.append(line)
 	elif 'modelComment' in line: # Identification of the 'model commentary' piece of information
 		mdl.append(line)
@@ -76,16 +77,20 @@ for i in range(len(lines_split)): # Travel across the differents models
 			id_nb = id_nb + 1
 
 # Duplicated commentaries due to several versions have to be deleted
+cpt = 0
 multiple_versions_mdl_idx = [] # Array used to get the index of models including several versions
 for i in range(len(array_cmt)):
 	for j in range(len(array_cmt)):
 		if i != j:
 			if array_cmt[i] == array_cmt[j]: # If there is a duplicate of a comment, that's meaning there are several model versions
-				multiple_versions_mdl_idx.append(i) # So it is exclude
-
-for i in range(len(multiple_versions_mdl_idx)): # Travel across the commentaries to exclude
-	if i%2 == 1:
-		mdl_comment.remove(mdl_comment[multiple_versions_mdl_idx[i]]) # We only keep the first version commentary
+				if len(mdl_comment)%2 == 1:
+					mdl_comment.remove(mdl_comment[]) # multiple_versions_mdl_idx.append(i) # So it is exclude
+					cpt = cpt + 1
+# cpt = 0
+# for i in range(len(multiple_versions_mdl_idx)): # Travel across the commentaries to exclude
+# 	if i%2 == 1:
+# 		mdl_comment.remove(mdl_comment[multiple_versions_mdl_idx[i-cpt]]) # We only keep the first version commentary
+# 		cpt = cpt + 1
 
 # Tmp arrays declaration (used to fill the final 2D array)
 a1 = []
