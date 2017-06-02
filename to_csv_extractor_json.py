@@ -119,8 +119,4 @@ with open(csv_data, 'w', newline='') as csv_file:
 			writer.writerows([Matrix[i]])
 	csv_file.close() # Properly close the final csv file
 
-<<<<<<< HEAD
 print('Execution time = %f sec.' % (time.time() - start))
-=======
-print('Execution time = %f sec.' % (time.time() - start))
->>>>>>> fba6ccc... File renamed
